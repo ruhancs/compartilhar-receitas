@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="FluentMigrator" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="MySqlConnector" Version="2.2.5" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MeuLivroReceitas.Domain\MeuLivroReceitas.Domain.csproj" />
   </ItemGroup>
 
