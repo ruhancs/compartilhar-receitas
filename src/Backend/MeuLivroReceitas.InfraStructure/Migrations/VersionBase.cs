@@ -8,7 +8,7 @@ public static class VersionBase
     {
         return table
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("DataCriacao").AsDateTime().NotNullable();
+            .WithColumn("CreatedAt").AsDateTime().NotNullable();
 
     }
 }

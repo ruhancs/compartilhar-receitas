@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace MeuLivroReceitas.Comunication.Request;
 
-namespace MeuLivroReceitas.Domain.Entities;
-
-public class Usuario : EntityBase
+public class RequestRegisterUserJson
 {
     public string Name { get; set; }
     public string Email { get; set; }

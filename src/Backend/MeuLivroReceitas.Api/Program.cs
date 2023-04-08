@@ -1,6 +1,9 @@
 ﻿using MeuLivroReceitas.InfraStructure.Migrations;
 using MeuLivroReceitas.Domain.Extension;
 using MeuLivroReceitas.InfraStructure;
+using MeuLivroReceitas.Api.Filters;
+using MeuLivroReceitas.Application.Services.Automapper;
+using MeuLivroReceitas.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,20 @@ builder.Services.AddSwaggerGen();
 //inje�ao de dependencia
 //para utilizar IMigrationRunner em MigrationExtention
 builder.Services.AddRepository(builder.Configuration);
+
+//injeçao de dependencia
+//quando IRegisterUserUseCase for chamado instacia RegisterUserUseCase
+builder.Services.AddApplication(builder.Configuration);
+
+//pegar erros
+builder.Services.AddMvc(option => option.Filters.Add(typeof(ExceptionsFilter)));
+
+//habilitar automapper com as configuraçoes que estao em AutomepperConfig
+builder.Services.AddScoped(provider => new AutoMapper.MapperConfiguration(
+    cfg =>
+    {
+        cfg.AddProfile(new AutomapperConfig());
+    }).CreateMapper());
 
 var app = builder.Build();
 
