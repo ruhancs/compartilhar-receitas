@@ -12,13 +12,13 @@ public class Version0000001 : Migration
 
     public override void Up()
     {
-        var table = VersionBase.InsertCollumns(Create.Table("Usuario"));
+        var table = VersionBase.InsertCollumns(Create.Table("Usuarios"));
 
         table
-            .WithColumn("Nome").AsString(100).NotNullable()
+            .WithColumn("Name").AsString(100).NotNullable()
             .WithColumn("Email").AsString(200).NotNullable()
-            .WithColumn("Senha").AsString(2000).NotNullable()
-            .WithColumn("Telefone").AsString(14).NotNullable();
+            .WithColumn("Password").AsString(2000).NotNullable()
+            .WithColumn("Phone").AsString(14).NotNullable();
 
 
     }
