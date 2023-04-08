@@ -6,7 +6,7 @@ using MeuLivroReceitas.Exceptions;
 namespace MeuLivroReceitas.Application.UseCases.User.Register;
 
 //validar classe RequestRegisterUserJson
-internal class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson>
+public class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson>
 {
     public RegisterUserValidator()
     {
@@ -16,7 +16,7 @@ internal class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson
         RuleFor(c => c.Password).NotEmpty().WithMessage(ResourceMessageError.PASSWORD_EMPTY);
         RuleFor(c => c.Phone).NotEmpty().WithMessage(ResourceMessageError.PHONE_EMPTY);
         
-        When(c => string.IsNullOrWhiteSpace(c.Email), () =>
+        When(c => !string.IsNullOrWhiteSpace(c.Email), () =>
         {
             RuleFor(c => c.Email).EmailAddress().WithMessage(ResourceMessageError.EMAIL_INVALID);
         });
