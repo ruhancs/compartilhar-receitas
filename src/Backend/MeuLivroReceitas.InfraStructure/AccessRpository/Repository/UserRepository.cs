@@ -22,4 +22,11 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
     {
         return await _context.Usuarios.AnyAsync(c => c.Email.Equals(email));
     }
+
+    public async Task<Usuario> Login(string email, string password)
+    {
+        //se encontrar devolve o user se nao encontrar null
+        return await _context.Usuarios.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email.Equals(email) && u.Password.Equals(email));
+    }
 }
