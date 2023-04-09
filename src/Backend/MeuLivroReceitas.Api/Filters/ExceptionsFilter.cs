@@ -32,7 +32,7 @@ public class ExceptionsFilter : IExceptionFilter
         }
         else if (context.Exception is LoginInvalidException)
         {
-
+            HandleValidationException(context);
         }
     }
 
