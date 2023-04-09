@@ -20,7 +20,7 @@ public class ExceptionsFilter : IExceptionFilter
         }
         else
         {
-            UnknownError(context);
+            //UnknownError(context);
         }
     }
 
@@ -32,7 +32,7 @@ public class ExceptionsFilter : IExceptionFilter
         }
         else if (context.Exception is LoginInvalidException)
         {
-            HandleValidationException(context);
+            HandleLoginException(context);
         }
     }
 
