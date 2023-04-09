@@ -129,6 +129,9 @@
   <data name="EMPTY_USER" xml:space="preserve">
     <value>the username must be provided</value>
   </data>
+  <data name="LOGIN_INVALID" xml:space="preserve">
+    <value>email or password wrong</value>
+  </data>
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>the password must be provided</value>
   </data>

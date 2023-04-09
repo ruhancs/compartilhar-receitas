@@ -1,5 +1,6 @@
 ﻿using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
+using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
 using MeuLivroReceitas.Application.UseCases.User.Register;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,8 @@ public static class Bootstraped
 
         AddTokenParams(service, config);
 
-        service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        addUseCase(service);
+
     }
 
     private static void AddPasswordKey(IServiceCollection service, IConfiguration config)
@@ -31,5 +33,11 @@ public static class Bootstraped
         var sectionExpireToken = config.GetRequiredSection("Config:ExpireToken");
 
         service.AddScoped(option => new TokenController(int.Parse(sectionExpireToken.Value),sectionTokenKey.Value));
+    }
+
+    private static void addUseCase(IServiceCollection service)
+    {
+        service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>()
+            .AddScoped<ILoginUseCase, LoginUseCase>();
     }
 }

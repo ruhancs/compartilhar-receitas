@@ -2,5 +2,7 @@
 
 public class ExceptionBase: SystemException
 {
-
+    public ExceptionBase(string message) : base(message)
+    {
+    }
 }

@@ -97,6 +97,15 @@ namespace MeuLivroReceitas.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to email or password wrong.
+        /// </summary>
+        public static string LOGIN_INVALID {
+            get {
+                return ResourceManager.GetString("LOGIN_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to the password must be provided.
         /// </summary>
         public static string PASSWORD_EMPTY {

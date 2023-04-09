@@ -20,7 +20,7 @@ public class ExceptionsFilter : IExceptionFilter
         }
         else
         {
-
+            UnknownError(context);
         }
     }
 
@@ -29,6 +29,10 @@ public class ExceptionsFilter : IExceptionFilter
         if(context.Exception is ValidationErrors)
         {
             HandleValidationException(context);
+        }
+        else if (context.Exception is LoginInvalidException)
+        {
+
         }
     }
 
@@ -40,6 +44,13 @@ public class ExceptionsFilter : IExceptionFilter
 
     }
 
+    private void HandleLoginException(ExceptionContext context)
+    {
+        var loginError = context.Exception as LoginInvalidException;
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+        context.Result = new ObjectResult(new ResponseError(loginError.Message));
+    }
+
     private void UnknownError(ExceptionContext context)
     {
         //status 500
@@ -47,4 +58,6 @@ public class ExceptionsFilter : IExceptionFilter
         //Result e o corpo da resposta
         context.Result = new ObjectResult(new ResponseError(ResourceMessageError.UNKNOWN_ERROR));
     }
+
+
 }

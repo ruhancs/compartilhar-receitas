@@ -129,6 +129,9 @@
   <data name="EMPTY_USER" xml:space="preserve">
     <value>O nome do usuario deve ser informado</value>
   </data>
+  <data name="LOGIN_INVALID" xml:space="preserve">
+    <value>email or password wrong</value>
+  </data>
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>A senha deve ser informada</value>
   </data>
