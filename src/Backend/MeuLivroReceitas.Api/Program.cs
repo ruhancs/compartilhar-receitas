@@ -4,6 +4,7 @@ using MeuLivroReceitas.InfraStructure;
 using MeuLivroReceitas.Api.Filters;
 using MeuLivroReceitas.Application.Services.Automapper;
 using MeuLivroReceitas.Application;
+using MeuLivroReceitas.InfraStructure.AccessRpository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,12 +57,27 @@ app.Run();
 
 void updateDataBase()
 {
-    //GetConnection criado em Domain/Extention
-    var conectionString = builder.Configuration.GetConnection();
-    var databaseName = builder.Configuration.GetDatabaseName();
+    //se o db for em memoria dos testes nao executa as migraçoes
+    using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    
+    using var context = serviceScope.ServiceProvider.GetService<Context>();
 
-    Database.CreateDatabase(conectionString, databaseName);
+    //verificar se o provider name e InMemory
+    bool? databaseInMemory = context?.Database?.ProviderName?.Equals("Microsoft.EntityFrameworkCore.InMemory");
 
-    //fazer as migracoes do db
-    app.MigrationDB();
+    if(!databaseInMemory.HasValue || !databaseInMemory.Value)
+    {
+        //GetConnection criado em Domain/Extention
+        var conectionString = builder.Configuration.GetConnection();
+        var databaseName = builder.Configuration.GetDatabaseName();
+
+        Database.CreateDatabase(conectionString, databaseName);
+
+        //fazer as migracoes do db
+        app.MigrationDB();
+    }
+
 }
+
+//definicao para Utilizar Program nos testes
+public partial class Program { }

@@ -26,17 +26,23 @@ public static class Bootstrappers
     //injeçao de dependencia de Context
     private static void AddContext(IServiceCollection services,IConfiguration configManager)
     {
-        //versao do mysql
-        var serverVersion = new MySqlServerVersion(new Version(8,0,32));
-        var connectionStrig = configManager.GetFullConnectionString();
+        bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
 
-        //se em algum lugar for utilizado Context
-        //ira entregar uma instancia da classe Context
-        //que faz as operaçoes nas tabelas
-        services.AddDbContext<Context>(dbContextOpt =>
+        if (!databaseInMemory)
         {
-            dbContextOpt.UseMySql(connectionStrig, serverVersion);
-        });
+            //versao do mysql
+            var serverVersion = new MySqlServerVersion(new Version(8,0,32));
+            var connectionStrig = configManager.GetFullConnectionString();
+
+            //se em algum lugar for utilizado Context
+            //ira entregar uma instancia da classe Context
+            //que faz as operaçoes nas tabelas
+            services.AddDbContext<Context>(dbContextOpt =>
+            {
+                dbContextOpt.UseMySql(connectionStrig, serverVersion);
+            });
+        }
+
     }
 
     //adicionar serviço UnitOfWork
@@ -63,10 +69,17 @@ public static class Bootstrappers
     {
         var connectionString = configManager.GetFullConnectionString();
 
-        service.AddFluentMigratorCore().ConfigureRunner(c =>
-        c.AddMySql5()
-        .WithGlobalConnectionString(connectionString).ScanIn(Assembly.Load("MeuLivroReceitas.InfraStructure"))
-        .For.All()//procurar em todo MeuLivroReceitas.InfraStructure classes para migrar
-        );
+        //quando executar os testes verificar se esta usando um db em memory
+        bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
+
+        //se o db nao for em memoria 
+        if (!databaseInMemory)
+        {
+            service.AddFluentMigratorCore().ConfigureRunner(c =>
+            c.AddMySql5()
+            .WithGlobalConnectionString(connectionString).ScanIn(Assembly.Load("MeuLivroReceitas.InfraStructure"))
+            .For.All()//procurar em todo MeuLivroReceitas.InfraStructure classes para migrar
+            );
+        }
     }
 }
