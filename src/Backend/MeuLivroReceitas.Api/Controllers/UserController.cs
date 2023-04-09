@@ -5,15 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MeuLivroReceitas.Api.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UserController : ControllerBase
+
+    public class UserController : MeuLivroReceitasController
     {
 
-        [HttpPost(Name = "RegisterUser")]
+        [HttpPost]
         //informar no swagger qual o codigo que ira retorna e o corpo que ira retornar
         [ProducesResponseType(typeof(ResponseRegisterUserJson), StatusCodes.Status201Created)]
-        public async Task<IActionResult> RegisterUser(
+        public async Task<IActionResult> Register(
             [FromServices] IRegisterUserUseCase usecase,
             [FromBody] RequestRegisterUserJson req
             )

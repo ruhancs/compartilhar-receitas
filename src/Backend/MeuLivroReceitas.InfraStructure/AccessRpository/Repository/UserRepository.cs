@@ -27,6 +27,6 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
     {
         //se encontrar devolve o user se nao encontrar null
         return await _context.Usuarios.AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Email.Equals(email) && u.Password.Equals(email));
+            .FirstOrDefaultAsync(u => u.Email.Equals(email) && u.Password.Equals(password));
     }
 }
