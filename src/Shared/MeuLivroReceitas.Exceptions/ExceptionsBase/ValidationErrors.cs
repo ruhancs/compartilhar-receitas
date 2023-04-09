@@ -4,7 +4,7 @@ public class ValidationErrors : ExceptionBase
 {
     public List<string> MessagesErro { get; set; }
 
-    public ValidationErrors(List<string> messagesErro)
+    public ValidationErrors(List<string> messagesErro) : base(String.Empty)
     {
         MessagesErro = messagesErro;
     }
