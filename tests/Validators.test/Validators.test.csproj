@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Backend\MeuLivroReceitas.Application\MeuLivroReceitas.Application.csproj" />
+    <ProjectReference Include="..\..\src\Shared\MeuLivroReceitas.Comunication\MeuLivroReceitas.Comunication.csproj" />
     <ProjectReference Include="..\UtilsTests\UtilsTests.csproj" />
   </ItemGroup>
 
