@@ -1,5 +1,4 @@
-﻿using MeuLivroReceitas.Domain.Entities;
-using MeuLivroReceitas.Domain.Repositories;
+﻿using MeuLivroReceitas.Domain.Repositories.User;
 using Moq;
 
 namespace UtilsTests.Repositories;
@@ -41,13 +40,6 @@ public class UserReadOnlyRepositoryBuilder
 
             return this;
         }
-    }
-
-    public UserReadOnlyRepositoryBuilder LoginWithEmailAndPassword(Usuario user)
-    {
-        _repository.Setup(i => i.Login(user.Email, user.Password)).ReturnsAsync(user);
-
-        return this;
     }
 
     public IUserReadOnlyRepository Construct()

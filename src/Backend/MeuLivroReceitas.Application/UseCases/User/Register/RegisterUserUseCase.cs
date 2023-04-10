@@ -5,6 +5,7 @@ using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;
 using MeuLivroReceitas.Domain.Entities;
 using MeuLivroReceitas.Domain.Repositories;
+using MeuLivroReceitas.Domain.Repositories.User;
 using MeuLivroReceitas.Exceptions;
 using MeuLivroReceitas.Exceptions.ExceptionsBase;
 

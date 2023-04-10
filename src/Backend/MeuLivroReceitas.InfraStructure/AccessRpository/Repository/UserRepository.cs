@@ -1,11 +1,12 @@
 ﻿using MeuLivroReceitas.Domain.Entities;
-using MeuLivroReceitas.Domain.Repositories;
+using MeuLivroReceitas.Domain.Repositories.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeuLivroReceitas.InfraStructure.AccessRpository;
 
-//recebe as interface para implementar os metodos de leitura e escrita
-internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository
+//recebe as interface para implementar os metodos de leitura,escrita e update
+//adicionar dependencia em bootstraped em AddRepositories
+internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUpdateOnlyRepository
 {
     private readonly Context _context;
     public UserRepository(Context context)
@@ -28,5 +29,10 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
         //se encontrar devolve o user se nao encontrar null
         return await _context.Usuarios.AsNoTracking()
             .FirstOrDefaultAsync(u => u.Email.Equals(email) && u.Password.Equals(password));
+    }
+
+    public void Update(Usuario user)
+    {
+        _context.Usuarios.Update(user);
     }
 }
