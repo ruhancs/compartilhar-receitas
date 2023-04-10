@@ -5,6 +5,9 @@ using MeuLivroReceitas.Api.Filters;
 using MeuLivroReceitas.Application.Services.Automapper;
 using MeuLivroReceitas.Application;
 using MeuLivroReceitas.InfraStructure.AccessRpository;
+using MeuLivroReceitas.Application.Services.AuthUser;
+using MeuLivroReceitas.Application.Services.AuthenticatedUser;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +16,44 @@ var builder = WebApplication.CreateBuilder(args);
 //endpoints com letra minuscula
 builder.Services.AddRouting(option => option.LowercaseUrls = true);
 
+//para utilizar o IHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+//adicionando autenticacao por token no swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MeuLivroReceitas", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Header de autoriza��o JWT usando o esquema Bearer.\r\n\r\nInforme 'Bearer'[espa�o] e o seu token.\r\n\r\nExamplo: \'Bearer 12345abcdef\'",
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+       {
+          new OpenApiSecurityScheme
+          {
+             Reference = new OpenApiReference
+             {
+                 Type = ReferenceType.SecurityScheme,
+                 Id = "Bearer"
+             }
+          },
+          new string[] {}
+       }
+    });
+
+});
 
 //inje�ao de dependencia
 //para utilizar IMigrationRunner em MigrationExtention
@@ -35,6 +72,9 @@ builder.Services.AddScoped(provider => new AutoMapper.MapperConfiguration(
     {
         cfg.AddProfile(new AutomapperConfig());
     }).CreateMapper());
+
+//filtro de authenticacao de usuario
+builder.Services.AddScoped<AuthenticatedUserAttr>();
 
 var app = builder.Build();
 

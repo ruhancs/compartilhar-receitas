@@ -13,17 +13,13 @@ public class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson>
         //ResourceMessageError gerado em shared Exceptions
         RuleFor(c => c.Name).NotEmpty().WithMessage(ResourceMessageError.EMPTY_USER);
         RuleFor(c => c.Email).NotEmpty().WithMessage(ResourceMessageError.EMAIL_EMPTY);
-        RuleFor(c => c.Password).NotEmpty().WithMessage(ResourceMessageError.PASSWORD_EMPTY);
         RuleFor(c => c.Phone).NotEmpty().WithMessage(ResourceMessageError.PHONE_EMPTY);
-        
+        //validacao de senha feita em ValidatePassword
+        RuleFor(c => c.Password).SetValidator(new ValidatePassword());
+
         When(c => !string.IsNullOrWhiteSpace(c.Email), () =>
         {
             RuleFor(c => c.Email).EmailAddress().WithMessage(ResourceMessageError.EMAIL_INVALID);
-        });
-        
-        When(c => !string.IsNullOrWhiteSpace(c.Password), () =>
-        {
-            RuleFor(c => c.Password.Length).GreaterThanOrEqualTo(6).WithMessage(ResourceMessageError.PASSWORD_MIN_LENGTH);
         });
         
         When(c => !string.IsNullOrWhiteSpace(c.Phone), () =>

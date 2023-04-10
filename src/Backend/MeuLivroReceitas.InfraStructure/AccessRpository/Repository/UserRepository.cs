@@ -24,6 +24,21 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
         return await _context.Usuarios.AnyAsync(c => c.Email.Equals(email));
     }
 
+    //pegar usuario pelo id para atualizalo
+    //em application updatePasswordUsecase
+    //interface criada em IUpdateOnlyRepository
+    public async Task<Usuario> GetById(long id)
+    {
+        return await _context.Usuarios
+            .FirstOrDefaultAsync(c => c.Id == id);
+    }
+
+    public async Task<Usuario> GetEmail(string email)
+    {
+        return await _context.Usuarios.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email.Equals(email));
+    }
+
     public async Task<Usuario> Login(string email, string password)
     {
         //se encontrar devolve o user se nao encontrar null
@@ -35,4 +50,6 @@ internal class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepositor
     {
         _context.Usuarios.Update(user);
     }
+
+
 }

@@ -129,6 +129,12 @@
   <data name="EMPTY_USER" xml:space="preserve">
     <value>O nome do usuario deve ser informado</value>
   </data>
+  <data name="EXPIRED_TOKEN" xml:space="preserve">
+    <value>Token invalido ou expirado</value>
+  </data>
+  <data name="INVALID_CURRENT_PASSWORD" xml:space="preserve">
+    <value>A senha atual do usuario esta incorreta</value>
+  </data>
   <data name="LOGIN_INVALID" xml:space="preserve">
     <value>email or password wrong</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="PHONE_INVALID" xml:space="preserve">
     <value>O telefone deve estar no formato XX X XXXX-XXXX</value>
+  </data>
+  <data name="UNAUTHORIZED_USER" xml:space="preserve">
+    <value>Usuario nao autorizado a acessar essa area</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro interno tente novamente mais tarde</value>
