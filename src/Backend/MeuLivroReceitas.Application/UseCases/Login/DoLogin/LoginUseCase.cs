@@ -2,7 +2,7 @@
 using MeuLivroReceitas.Application.Services.Token;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;
-using MeuLivroReceitas.Domain.Repositories;
+using MeuLivroReceitas.Domain.Repositories.User;
 using MeuLivroReceitas.Exceptions.ExceptionsBase;
 
 namespace MeuLivroReceitas.Application.UseCases.Login.DoLogin;

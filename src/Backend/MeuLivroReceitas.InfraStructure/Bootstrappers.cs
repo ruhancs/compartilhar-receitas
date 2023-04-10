@@ -6,6 +6,7 @@ using MeuLivroReceitas.InfraStructure.AccessRpository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using MeuLivroReceitas.Domain.Repositories.User;
 
 namespace MeuLivroReceitas.InfraStructure;
 
@@ -62,7 +63,8 @@ public static class Bootstrappers
         //que adiciona usuarios ao db e verifica se email existe
 
         services.AddScoped<IUserWriteOnlyRepository, UserRepository>()
-            .AddScoped<IUserReadOnlyRepository, UserRepository>();
+            .AddScoped<IUserReadOnlyRepository, UserRepository>()
+            .AddScoped<IUpdateOnlyRepository, UserRepository>();
     }
 
     private static void AddFluentMigrator(IServiceCollection service, IConfiguration configManager)
