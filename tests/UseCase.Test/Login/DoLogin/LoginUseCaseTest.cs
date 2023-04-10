@@ -24,7 +24,7 @@ public class LoginUseCaseTest
             Email = user.Email,
             Password = password
         });
-
+        //
         response.Should().NotBeNull();
         response.Name.Should().Be(user.Name);
         response.Token.Should().NotBeNullOrWhiteSpace();
@@ -32,6 +32,7 @@ public class LoginUseCaseTest
 
     private LoginUseCase CreateUseCase(Usuario user)
     {
+        
         var encryptPassword = EncryptPasswordBuilder.Intance();
         var tokenController = TokenControllerBuilder.Instance();
         var repositoryReadOnly = UserReadOnlyRepositoryBuilder.Instancia().LoginWithEmailAndPassword(user).Construct();
