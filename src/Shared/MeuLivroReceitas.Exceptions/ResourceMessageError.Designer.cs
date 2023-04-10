@@ -97,6 +97,24 @@ namespace MeuLivroReceitas.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to invalid token or expired.
+        /// </summary>
+        public static string EXPIRED_TOKEN {
+            get {
+                return ResourceManager.GetString("EXPIRED_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current user password is wrong.
+        /// </summary>
+        public static string INVALID_CURRENT_PASSWORD {
+            get {
+                return ResourceManager.GetString("INVALID_CURRENT_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to email or password wrong.
         /// </summary>
         public static string LOGIN_INVALID {
@@ -138,6 +156,15 @@ namespace MeuLivroReceitas.Exceptions {
         public static string PHONE_INVALID {
             get {
                 return ResourceManager.GetString("PHONE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not authorized to request this endpoint.
+        /// </summary>
+        public static string UNAUTHORIZED_USER {
+            get {
+                return ResourceManager.GetString("UNAUTHORIZED_USER", resourceCulture);
             }
         }
         

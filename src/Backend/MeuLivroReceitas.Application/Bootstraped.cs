@@ -1,7 +1,10 @@
-﻿using MeuLivroReceitas.Application.Services.Cryptography;
+﻿using MeuLivroReceitas.Application.Services.AuthenticatedUser;
+using MeuLivroReceitas.Application.Services.AuthUser;
+using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
 using MeuLivroReceitas.Application.UseCases.User.Register;
+using MeuLivroReceitas.Application.UseCases.User.Update;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +19,8 @@ public static class Bootstraped
         AddTokenParams(service, config);
 
         addUseCase(service);
+
+        addUserAuthenticated(service);
 
     }
 
@@ -38,6 +43,12 @@ public static class Bootstraped
     private static void addUseCase(IServiceCollection service)
     {
         service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>()
-            .AddScoped<ILoginUseCase, LoginUseCase>();
+            .AddScoped<ILoginUseCase, LoginUseCase>()
+            .AddScoped<IUpdatePasswordUseCase, UpdatePasswordUseCase>();
+    }
+
+    private static void addUserAuthenticated(IServiceCollection service)
+    {
+        service.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
     }
 }

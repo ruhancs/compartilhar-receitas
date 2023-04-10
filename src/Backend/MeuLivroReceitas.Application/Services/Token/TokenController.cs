@@ -40,7 +40,14 @@ public class TokenController
         return tokenHandler.WriteToken(securityToken); 
     }
 
-    public void ValidateToken(string token)
+    public string GetEmail(string token)
+    {
+        var claims = ValidateToken(token);//dados do token
+
+        return claims.FindFirst(EmailAlias).Value;//retorna o email do token
+    }
+
+    public ClaimsPrincipal ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -54,7 +61,9 @@ public class TokenController
         };
 
         //se token nao for valido lancara uma exception
-        tokenHandler.ValidateToken(token, validateParams, out _);
+        var claim = tokenHandler.ValidateToken(token, validateParams, out _);
+        
+        return claim;//retorna os dados do token
     }
 
     private SymmetricSecurityKey SimmetricKey()

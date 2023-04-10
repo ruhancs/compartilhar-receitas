@@ -129,6 +129,12 @@
   <data name="EMPTY_USER" xml:space="preserve">
     <value>the username must be provided</value>
   </data>
+  <data name="EXPIRED_TOKEN" xml:space="preserve">
+    <value>invalid token or expired</value>
+  </data>
+  <data name="INVALID_CURRENT_PASSWORD" xml:space="preserve">
+    <value>The current user password is wrong</value>
+  </data>
   <data name="LOGIN_INVALID" xml:space="preserve">
     <value>email or password wrong</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="PHONE_INVALID" xml:space="preserve">
     <value>the phone must be in the format XX X XXXX-XXXX</value>
+  </data>
+  <data name="UNAUTHORIZED_USER" xml:space="preserve">
+    <value>User not authorized to request this endpoint</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Internal server error try again later</value>
