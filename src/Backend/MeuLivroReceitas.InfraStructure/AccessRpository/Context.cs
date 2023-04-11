@@ -11,6 +11,7 @@ public class Context : DbContext
     //para se conectar com a entidade Usuario
     //mapeamento da tabela User
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Recipe> Receitas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
