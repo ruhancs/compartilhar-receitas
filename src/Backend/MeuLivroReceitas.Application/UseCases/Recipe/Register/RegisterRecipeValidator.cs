@@ -23,7 +23,7 @@ namespace MeuLivroReceitas.Application.UseCases.Recipe.Register
             });
 
             //nao criar um ingrediente que ja existe
-            RuleFor(c => c.Ingredients).Custom((ingredients,context) =>
+            RuleFor(c => c.Ingredients).Custom((ingredients, context) =>
             {
                 //dentro da lista de productsDistint tera somente strings que nao sao iguais
                 var productsDistint = ingredients.Select(i => i.Product).Distinct();
@@ -35,7 +35,7 @@ namespace MeuLivroReceitas.Application.UseCases.Recipe.Register
                     //adiciona falha ao context
                     context.AddFailure(new ValidationFailure("Ingredients", ""));
                 }
-            })
+            });
         }
     }
 }
