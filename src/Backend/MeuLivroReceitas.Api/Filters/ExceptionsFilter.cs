@@ -36,7 +36,7 @@ public class ExceptionsFilter : IExceptionFilter
         }
     }
 
-    private void HandleValidationException(ExceptionContext context)
+    private static void HandleValidationException(ExceptionContext context)
     {
         var validationErrorException = context.Exception as ValidationErrors;
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -44,14 +44,14 @@ public class ExceptionsFilter : IExceptionFilter
 
     }
 
-    private void HandleLoginException(ExceptionContext context)
+    private static void HandleLoginException(ExceptionContext context)
     {
         var loginError = context.Exception as LoginInvalidException;
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         context.Result = new ObjectResult(new ResponseError(loginError.Message));
     }
 
-    private void UnknownError(ExceptionContext context)
+    private static void UnknownError(ExceptionContext context)
     {
         //status 500
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
