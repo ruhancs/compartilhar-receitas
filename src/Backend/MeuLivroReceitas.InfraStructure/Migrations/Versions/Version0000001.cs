@@ -10,6 +10,7 @@ public class Version0000001 : Migration
     {
     }
 
+    // criar a tabela usuarios
     public override void Up()
     {
         var table = VersionBase.InsertCollumns(Create.Table("Usuarios"));
