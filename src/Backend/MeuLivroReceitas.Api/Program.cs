@@ -9,6 +9,7 @@ using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using Microsoft.OpenApi.Models;
 using MeuLivroReceitas.Api.Middleware;
+using HashidsNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,11 +68,15 @@ builder.Services.AddApplication(builder.Configuration);
 //pegar erros
 builder.Services.AddMvc(option => option.Filters.Add(typeof(ExceptionsFilter)));
 
+//AutomapperConfig criado em Application.Services.Automapper
+//habilitar o automapper sem hashId
+//builder.Services.AddAutoMapper(typeof(AutomapperConfig));
+
 //habilitar automapper com as configuraçoes que estao em AutomepperConfig
 builder.Services.AddScoped(provider => new AutoMapper.MapperConfiguration(
     cfg =>
     {
-        cfg.AddProfile(new AutomapperConfig());
+        cfg.AddProfile(new AutomapperConfig(provider.GetService<IHashids>()));
     }).CreateMapper());
 
 //filtro de authenticacao de usuario

@@ -14,4 +14,5 @@ public class Recipe : EntityBase
 
     //colecao de ingredients
     public ICollection<Ingredient> Ingredients { get; set; }
+    public long UserId { get; set; }
 }
