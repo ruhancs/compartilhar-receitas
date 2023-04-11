@@ -3,6 +3,8 @@ using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
+using MeuLivroReceitas.Application.UseCases.Recipe;
+using MeuLivroReceitas.Application.UseCases.Recipe.Register;
 using MeuLivroReceitas.Application.UseCases.User.Register;
 using MeuLivroReceitas.Application.UseCases.User.Update;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,8 @@ public static class Bootstraped
     public static void AddApplication(this IServiceCollection service, IConfiguration config)
     {
         AddPasswordKey(service, config);
+
+        AddHashId(service, config);
 
         AddTokenParams(service, config);
 
@@ -44,11 +48,23 @@ public static class Bootstraped
     {
         service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>()
             .AddScoped<ILoginUseCase, LoginUseCase>()
-            .AddScoped<IUpdatePasswordUseCase, UpdatePasswordUseCase>();
+            .AddScoped<IUpdatePasswordUseCase, UpdatePasswordUseCase>()
+            .AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)
     {
         service.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
+    }
+    
+    private static void AddHashId(IServiceCollection service, IConfiguration config)
+    {
+        var salt = config.GetRequiredSection("Config:HashId:Salt");
+
+        service.AddHashids(setup =>
+        {
+            setup.Salt = salt.Value;
+            setup.MinHashLength = 3;
+        });
     }
 }

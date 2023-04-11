@@ -25,7 +25,12 @@ public class Version0000002 : Migration
         table
             .WithColumn("Title").AsString(100).NotNullable()
             .WithColumn("Category").AsInt16().NotNullable()
-            .WithColumn("MethodPreparation").AsString(5000).NotNullable();
+            .WithColumn("MethodPreparation").AsString(5000).NotNullable()
+            //ForeignKey da tabela receita com Usuario
+            .WithColumn("UserId")
+                .AsInt64()
+                .NotNullable()
+                .ForeignKey("FK_Receita_Usuario_Id", "Usuarios", "Id");
 
     }
     private void CreateIngredientsTable()
