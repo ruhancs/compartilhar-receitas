@@ -8,6 +8,7 @@ using MeuLivroReceitas.InfraStructure.AccessRpository;
 using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using Microsoft.OpenApi.Models;
+using MeuLivroReceitas.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,7 +58,7 @@ builder.Services.AddSwaggerGen(c =>
 
 //inje�ao de dependencia
 //para utilizar IMigrationRunner em MigrationExtention
-builder.Services.AddRepository(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 //injeçao de dependencia
 //quando IRegisterUserUseCase for chamado instacia RegisterUserUseCase
@@ -93,6 +94,9 @@ app.MapControllers();
 
 updateDataBase();
 
+//para adicionar a opcao de escolher a linguagem
+app.UseMiddleware<CultureMiddleware>();
+
 app.Run();
 
 void updateDataBase()
@@ -119,5 +123,8 @@ void updateDataBase()
 
 }
 
+//retirar alerta de bugs do sonar
+#pragma warning disable CA1058, S3903, S1118
 //definicao para Utilizar Program nos testes
 public partial class Program { }
+#pragma warning disable CA1058, S3903, S1118

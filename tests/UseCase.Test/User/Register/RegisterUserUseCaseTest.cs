@@ -48,7 +48,7 @@ public class RegisterUserUseCaseTest
     }
 
     //criar instancia de RegisterUserUseCase
-    private RegisterUserUseCase CreateUseCase(string email = "")
+    private static RegisterUserUseCase CreateUseCase(string email = "")
     {
         var mapper = MapperBuilder.Instance();
         var repository = UserWriteOnlyRepositoryBuilder.Instancia().Construct();

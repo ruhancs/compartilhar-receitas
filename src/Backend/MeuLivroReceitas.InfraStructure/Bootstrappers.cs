@@ -15,7 +15,7 @@ namespace MeuLivroReceitas.InfraStructure;
 //utilizada para injetar dependencias
 public static class Bootstrappers
 {
-    public static void AddRepository(this IServiceCollection service, IConfiguration configManager)
+    public static void AddInfrastructure(this IServiceCollection service, IConfiguration configManager)
     {
         AddFluentMigrator(service, configManager);
 
@@ -27,7 +27,7 @@ public static class Bootstrappers
     //injeçao de dependencia de Context
     private static void AddContext(IServiceCollection services,IConfiguration configManager)
     {
-        bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
+        _ = bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
 
         if (!databaseInMemory)
         {
@@ -72,7 +72,8 @@ public static class Bootstrappers
         var connectionString = configManager.GetFullConnectionString();
 
         //quando executar os testes verificar se esta usando um db em memory
-        bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
+        // _ = pois nao sera utilizado o retorno
+        _ = bool.TryParse(configManager.GetSection("Config:DataBaseInMemory").Value, out bool databaseInMemory);
 
         //se o db nao for em memoria 
         if (!databaseInMemory)

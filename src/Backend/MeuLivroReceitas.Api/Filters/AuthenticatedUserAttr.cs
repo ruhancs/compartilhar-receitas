@@ -2,6 +2,7 @@
 using MeuLivroReceitas.Comunication.Response;
 using MeuLivroReceitas.Domain.Repositories.User;
 using MeuLivroReceitas.Exceptions;
+using MeuLivroReceitas.Exceptions.ExceptionsBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -39,7 +40,7 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
         
             if(user is null)
             {
-                throw new System.Exception();
+                throw new ExceptionBase(string.Empty);
             }
 
         }
@@ -54,7 +55,7 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
 
     }
 
-    private string TokenInRequest(AuthorizationFilterContext context)
+    private static string TokenInRequest(AuthorizationFilterContext context)
     {
         //context representa a request recebida
         // no header em Authorization estara o token
@@ -66,7 +67,7 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
         if (string.IsNullOrWhiteSpace(authorization))
         {
             //em caso de exception e tratada no catch
-            throw new System.Exception();
+            throw new ExceptionBase(string.Empty);
         }
 
         //pegar somente o token e excluir o bearer
@@ -75,11 +76,11 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
         return authorization["Bearer".Length..].Trim();
     }
 
-    private void TokenExpired(AuthorizationFilterContext context)
+    private static void TokenExpired(AuthorizationFilterContext context)
     {
         context.Result = new UnauthorizedObjectResult(new ResponseError(ResourceMessageError.EXPIRED_TOKEN));
     }   
-    private void UserUnAuthorized(AuthorizationFilterContext context)
+    private static void UserUnAuthorized(AuthorizationFilterContext context)
     {
         context.Result = new UnauthorizedObjectResult(new ResponseError(ResourceMessageError.UNAUTHORIZED_USER));
     }

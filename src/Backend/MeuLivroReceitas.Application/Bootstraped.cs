@@ -27,15 +27,15 @@ public static class Bootstraped
     private static void AddPasswordKey(IServiceCollection service, IConfiguration config)
     {
         //pega dentro de app.settings.Development.json o PasswordKey
-        var section = config.GetRequiredSection("Config:PasswordKey");
+        var section = config.GetRequiredSection("Config:password:PasswordKey");
 
         service.AddScoped(option => new EncryptPassword(section.Value));
     }
     private static void AddTokenParams(IServiceCollection service, IConfiguration config)
     {
         //pega dentro de app.settings.Development.json o PasswordKey
-        var sectionTokenKey = config.GetRequiredSection("Config:TokenKey");
-        var sectionExpireToken = config.GetRequiredSection("Config:ExpireToken");
+        var sectionTokenKey = config.GetRequiredSection("Config:Jwt:TokenKey");
+        var sectionExpireToken = config.GetRequiredSection("Config:Jwt:ExpireTokenInHours");
 
         service.AddScoped(option => new TokenController(int.Parse(sectionExpireToken.Value),sectionTokenKey.Value));
     }
