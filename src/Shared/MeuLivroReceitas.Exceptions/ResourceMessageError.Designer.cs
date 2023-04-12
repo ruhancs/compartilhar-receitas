@@ -160,6 +160,15 @@ namespace MeuLivroReceitas.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The id of recipe not found.
+        /// </summary>
+        public static string RECIPE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("RECIPE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User not authorized to request this endpoint.
         /// </summary>
         public static string UNAUTHORIZED_USER {

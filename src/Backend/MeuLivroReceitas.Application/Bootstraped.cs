@@ -5,7 +5,7 @@ using MeuLivroReceitas.Application.Services.Token;
 using MeuLivroReceitas.Application.UseCases.Dashboard;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
 using MeuLivroReceitas.Application.UseCases.Recipe;
-using MeuLivroReceitas.Application.UseCases.Recipe.Register;
+using MeuLivroReceitas.Application.UseCases.Recipe.GetById;
 using MeuLivroReceitas.Application.UseCases.User.Register;
 using MeuLivroReceitas.Application.UseCases.User.Update;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +51,8 @@ public static class Bootstraped
             .AddScoped<ILoginUseCase, LoginUseCase>()
             .AddScoped<IUpdatePasswordUseCase, UpdatePasswordUseCase>()
             .AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>()
-            .AddScoped<IDashboardUseCase, DashboardUseCase>();
+            .AddScoped<IDashboardUseCase, DashboardUseCase>()
+            .AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)
