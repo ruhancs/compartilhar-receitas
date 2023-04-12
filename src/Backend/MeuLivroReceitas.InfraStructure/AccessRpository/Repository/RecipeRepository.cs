@@ -17,14 +17,18 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
         _context = context;
     }
 
-    public async Task<List<Recipe>> GetAllRecipesUser(long userId)
+    public async Task<IList<Recipe>> GetAllRecipesUser(long userId)
     {
         //adicionar Receitas.AsNoTracking() para melhorar performance
-        return await _context.Receitas.Where(r => r.UserId == userId).ToListAsync();
+        return await _context.Receitas
+            .Include(r => r.Ingredients)//incluir a tabela de ingredientes na consulta
+            .AsNoTracking()
+            .Where(r => r.UserId == userId).ToListAsync();
     }
 
     public async Task Register(Recipe recipe)
     {
         await _context.Receitas.AddAsync(recipe);
     }
+
 }
