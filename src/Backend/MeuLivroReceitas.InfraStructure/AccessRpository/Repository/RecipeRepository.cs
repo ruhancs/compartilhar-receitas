@@ -26,6 +26,14 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
             .Where(r => r.UserId == userId).ToListAsync();
     }
 
+    public async Task<Recipe> GetRecipesById(long recipeId)
+    {
+        return await _context.Receitas.AsNoTracking()
+            .Include(r => r.Ingredients)
+            .FirstOrDefaultAsync(r => r.Id == recipeId);
+            
+    }
+
     public async Task Register(Recipe recipe)
     {
         await _context.Receitas.AddAsync(recipe);
