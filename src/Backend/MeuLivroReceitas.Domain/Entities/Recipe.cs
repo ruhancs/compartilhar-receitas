@@ -13,6 +13,9 @@ public class Recipe : EntityBase
     public string MethodPreparation { get; set; }
 
     //colecao de ingredients
+    //na requisiçao precisa informar que deseja inserir os ingrdientes
+    //join com a tabela de ingredientes
+    //em infrastructure RecipeRepository
     public ICollection<Ingredient> Ingredients { get; set; }
     public long UserId { get; set; }
 }
