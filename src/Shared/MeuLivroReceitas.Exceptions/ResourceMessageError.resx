@@ -150,6 +150,9 @@
   <data name="PHONE_INVALID" xml:space="preserve">
     <value>the phone must be in the format XX X XXXX-XXXX</value>
   </data>
+  <data name="RECIPE_NOT_FOUND" xml:space="preserve">
+    <value>The id of recipe not found</value>
+  </data>
   <data name="UNAUTHORIZED_USER" xml:space="preserve">
     <value>User not authorized to request this endpoint</value>
   </data>
