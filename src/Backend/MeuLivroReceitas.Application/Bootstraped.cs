@@ -2,6 +2,7 @@
 using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
+using MeuLivroReceitas.Application.UseCases.Dashboard;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
 using MeuLivroReceitas.Application.UseCases.Recipe;
 using MeuLivroReceitas.Application.UseCases.Recipe.Register;
@@ -49,7 +50,8 @@ public static class Bootstraped
         service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>()
             .AddScoped<ILoginUseCase, LoginUseCase>()
             .AddScoped<IUpdatePasswordUseCase, UpdatePasswordUseCase>()
-            .AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
+            .AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>()
+            .AddScoped<IDashboardUseCase, DashboardUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)
