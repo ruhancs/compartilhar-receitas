@@ -6,7 +6,7 @@ namespace MeuLivroReceitas.InfraStructure.AccessRpository.Repository;
 
 //recebe as interface para implementar os metodos de leitura,escrita e update
 //adicionar dependencia em bootstraped em AddRepositories
-public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepository
+public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepository, IRecipeUpdateOnlyRepository
 {
     //adicionar em Infrastructure em Context
     //public DbSet<Recipe> Receitas { get; set; }
@@ -34,9 +34,22 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
             
     }
 
+    //pega receitas pelo id sem AsNoTracking para conseguir atualizar
+    public async Task<Recipe> GetRecipesByIdForUpdate(long recipeId)
+    {
+        return await _context.Receitas
+            .Include(r => r.Ingredients)
+            .FirstOrDefaultAsync(r => r.Id == recipeId);
+            
+    }
+
     public async Task Register(Recipe recipe)
     {
         await _context.Receitas.AddAsync(recipe);
     }
 
+    public void Update(Recipe recipe)
+    {
+        _context.Receitas.Update(recipe);
+    }
 }

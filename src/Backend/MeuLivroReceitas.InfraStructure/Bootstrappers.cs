@@ -68,7 +68,8 @@ public static class Bootstrappers
             .AddScoped<IUserReadOnlyRepository, UserRepository>()
             .AddScoped<IUpdateOnlyRepository, UserRepository>()
             .AddScoped<IRecipeWriteOnlyRepository, RecipeRepository>()
-            .AddScoped<IRecipeReadOnlyRepository, RecipeRepository>();
+            .AddScoped<IRecipeReadOnlyRepository, RecipeRepository>()
+            .AddScoped<IRecipeUpdateOnlyRepository, RecipeRepository>();
     }
 
     private static void AddFluentMigrator(IServiceCollection service, IConfiguration configManager)
