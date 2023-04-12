@@ -3,5 +3,6 @@
     public interface IRecipeReadOnlyRepository
     {
         Task<IList<Entities.Recipe>> GetAllRecipesUser(long userId);
+        Task<Entities.Recipe> GetRecipesById(long recipeId);
     }
 }
