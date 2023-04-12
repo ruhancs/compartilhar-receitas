@@ -45,5 +45,15 @@ public class AutomapperConfig : Profile
         CreateMap<Ingredient, ResponseIngredientJson>()
             //transformar o id da resposta de long para hash
             .ForMember(destiny => destiny.id, config => config.MapFrom(origem => _hashId.EncodeLong(origem.Id)));
+
+        //para transformar Receitas para ResponseRecipeDashboardJson
+        // e inserir Hash no id
+        CreateMap<Recipe, Comunication.Response.ResponseRecipeDashboardJson>()
+    //transformar o id da resposta de long para hash
+    .ForMember(destiny => destiny.Id, config => config.MapFrom(origem => _hashId.EncodeLong(origem.Id)))
+    //para fazer a contagem de ingredientes que esta na receita
+    //informa que para IngredientsQuantity sera a contagem de todos ingredientes da receita
+    .ForMember(destyni => destyni.IngredientsQuantity, config => config.MapFrom(origem => origem.Ingredients.Count))
+    ;
     }
 }
