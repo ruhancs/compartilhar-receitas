@@ -10,6 +10,7 @@ using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using Microsoft.OpenApi.Models;
 using MeuLivroReceitas.Api.Middleware;
 using HashidsNet;
+using MeuLivroReceitas.Api.Filters.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,9 @@ builder.Services.AddEndpointsApiExplorer();
 //adicionando autenticacao por token no swagger
 builder.Services.AddSwaggerGen(c =>
 {
+    //para descriptografar o id em Api.Filters.Swagger HashIdOperationFilter
+    c.OperationFilter<HashIdOperationFilter>();
+
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MeuLivroReceitas", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
