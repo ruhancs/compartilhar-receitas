@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MeuLivroReceitas.Comunication.Request;
+using MeuLivroReceitas.Domain.Extension;
 using MeuLivroReceitas.Exceptions;
 
 namespace MeuLivroReceitas.Application.UseCases.Recipe;
@@ -12,6 +13,7 @@ public class RecipeValidator : AbstractValidator<RequestRegisterRecipeJson>
         RuleFor(c => c.Title).NotEmpty().WithMessage(ResourceMessageError.EMPTY_USER);
         RuleFor(c => c.Category).IsInEnum().WithMessage(ResourceMessageError.EMAIL_EMPTY);
         RuleFor(c => c.MethodPreparation).NotEmpty().WithMessage(ResourceMessageError.EMAIL_EMPTY);
+        RuleFor(c => c.PreparationTime).InclusiveBetween(1, 1000).WithMessage(ResourceMessageError.PREPARATION_TIME_INVALID);
         RuleFor(c => c.Ingredients).NotEmpty().WithMessage(ResourceMessageError.PHONE_EMPTY);
 
         //validacao para cada elemento dentro da lista de ingredientes
@@ -25,7 +27,8 @@ public class RecipeValidator : AbstractValidator<RequestRegisterRecipeJson>
         RuleFor(c => c.Ingredients).Custom((ingredients, context) =>
         {
             //dentro da lista de productsDistint tera somente strings que nao sao iguais
-            var productsDistint = ingredients.Select(i => i.Product).Distinct();
+            //RemoveAccents criado em domain.extension
+            var productsDistint = ingredients.Select(i => i.Product.RemoveAccents().ToLower()).Distinct();
             //se o tamanho de productsDistint
             // for diferent do tamanho da lista de ingredients
             //significa que na lista contem produtos repetidos

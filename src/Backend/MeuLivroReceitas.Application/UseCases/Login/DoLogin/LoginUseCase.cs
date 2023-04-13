@@ -29,7 +29,7 @@ public class LoginUseCase : ILoginUseCase
         
         var user = await _userReadOnly.Login(req.Email, passwordEncrypted);
 
-        if(user == null)
+        if(user is null)
         {
             throw new LoginInvalidException();
         }

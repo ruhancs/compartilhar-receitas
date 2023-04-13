@@ -49,7 +49,7 @@ namespace MeuLivroReceitas.Application.UseCases.Recipe.Delete
         )
         {
 
-            if (recipe == null || recipe.UserId != user.Id)
+            if (recipe is null || recipe.UserId != user.Id)
             {
                 throw new ValidationErrors(new List<string> { ResourceMessageError.RECIPE_NOT_FOUND });
             }

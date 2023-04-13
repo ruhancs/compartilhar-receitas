@@ -3,5 +3,6 @@
 public enum EnumVersions
 {
     CreateUserTable = 1,
-    CreateRecipeTable = 2
+    CreateRecipeTable = 2,
+    UpdateRecipeTable = 3
 }
