@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Exceptions;
 

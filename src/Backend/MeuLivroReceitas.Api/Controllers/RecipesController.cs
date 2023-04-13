@@ -1,6 +1,7 @@
 ﻿using MeuLivroReceitas.Api.Binder;
 using MeuLivroReceitas.Api.Filters;
 using MeuLivroReceitas.Application.UseCases.Recipe;
+using MeuLivroReceitas.Application.UseCases.Recipe.Delete;
 using MeuLivroReceitas.Application.UseCases.Recipe.GetById;
 using MeuLivroReceitas.Application.UseCases.Recipe.Update;
 using MeuLivroReceitas.Comunication.Request;
@@ -65,6 +66,27 @@ public class RecipesController : MeuLivroReceitasController
         //var recipeId = Convert.ToInt64(id);
 
         await useCase.Execute(id,req);
+
+        return NoContent();
+    }
+    
+    [HttpDelete]
+    [Route("{id:hashids}")]
+    //tipo de resposta que produz ResponseRecipeJson status 201
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Delete(
+        [FromServices]IDeleteRecipeUseCase useCase,
+        //HashIdModelBinder criado em Binder
+        //para transformar id de string para numero
+        //decodifica o id
+        //em filters/Swagger criado HashIdOperationFilter
+        //e configurado em Program o Services.AddSwaggerGe para receber string como parametro em id
+        [FromRoute] [ModelBinder(typeof(HashidsModelBinder))] long id // pegar da rota o id
+        )
+    {
+        //var recipeId = Convert.ToInt64(id);
+
+        await useCase.Execute(id);
 
         return NoContent();
     }
