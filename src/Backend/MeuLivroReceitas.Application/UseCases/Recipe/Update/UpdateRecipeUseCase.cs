@@ -6,6 +6,7 @@ using MeuLivroReceitas.Exceptions.ExceptionsBase;
 using MeuLivroReceitas.Exceptions;
 using MeuLivroReceitas.Domain.Entities;
 using MeuLivroReceitas.Domain.Repositories;
+using MeuLivroReceitas.Application.UseCases.Recipe.Register;
 
 namespace MeuLivroReceitas.Application.UseCases.Recipe.Update;
 
@@ -42,7 +43,7 @@ public class UpdateRecipeUseCase : IUpdateRecipeUseCase
 
         var recipe = await _repository.GetRecipesByIdForUpdate(recipeId);
 
-        Validate(user, recipe);
+        Validate(user, recipe, req);
 
         //transforma RequestRegisterRecipeJson em Recipe
         //configurado em services/automapper/automapperConfig em RequestEntity
@@ -56,11 +57,23 @@ public class UpdateRecipeUseCase : IUpdateRecipeUseCase
 
     public void Validate(
     Domain.Entities.Usuario user,
-    Domain.Entities.Recipe recipe)
+    Domain.Entities.Recipe recipe,
+    Comunication.Request.RequestRegisterRecipeJson req
+    )
     {
         if (recipe == null || recipe.UserId != user.Id)
         {
             throw new ValidationErrors(new List<string> { ResourceMessageError.RECIPE_NOT_FOUND });
+        }
+
+        var validator = new UpdateRecipeValidator();
+        //resultado das validacoes de req
+        var result = validator.Validate(req);
+
+        if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(c => c.ErrorMessage).ToList();
+            throw new ValidationErrors(errorMessages);
         }
     }
 }
