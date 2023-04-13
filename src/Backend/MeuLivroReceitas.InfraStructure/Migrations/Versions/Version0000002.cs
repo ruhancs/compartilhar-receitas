@@ -47,7 +47,8 @@ public class Version0000002 : Migration
                 //primeiro parametro nome da chave,
                 //segundo o nome da tabela para associar,
                 //terceiro parametro o nome da coluna em receitas que se associara a ingredientes
-                .ForeignKey("FK_Ingrediente_Recipe_Id", "Receitas", "Id");
+                .ForeignKey("FK_Ingrediente_Recipe_Id", "Receitas", "Id")
+                    .OnDeleteOrUpdate(System.Data.Rule.Cascade);
 
     }
 }
