@@ -160,6 +160,15 @@ namespace MeuLivroReceitas.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must be provide a preparation time.
+        /// </summary>
+        public static string PREPARATION_TIME_INVALID {
+            get {
+                return ResourceManager.GetString("PREPARATION_TIME_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The id of recipe not found.
         /// </summary>
         public static string RECIPE_NOT_FOUND {

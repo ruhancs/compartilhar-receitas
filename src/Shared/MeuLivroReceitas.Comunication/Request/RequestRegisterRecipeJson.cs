@@ -14,5 +14,6 @@ public class RequestRegisterRecipeJson
     //criado para nao ter comunicacao entre Domain e Communication
     public CategoryComunication Category { get; set; }
     public string MethodPreparation { get; set; }
+    public int PreparationTime { get; set; }
     public List<RequesteRegisterIngredientJson> Ingredients { get; set; }
 }

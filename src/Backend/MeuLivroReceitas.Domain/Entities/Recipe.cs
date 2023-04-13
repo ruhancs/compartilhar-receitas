@@ -11,6 +11,7 @@ public class Recipe : EntityBase
     // criado em domain Enum
     public Category Category { get; set; }
     public string MethodPreparation { get; set; }
+    public int PreparationTime { get; set; }
 
     //colecao de ingredients
     //na requisiçao precisa informar que deseja inserir os ingrdientes

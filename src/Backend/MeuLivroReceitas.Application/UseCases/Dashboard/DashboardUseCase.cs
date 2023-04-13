@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;
+using MeuLivroReceitas.Domain.Extension;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 
 namespace MeuLivroReceitas.Application.UseCases.Dashboard;
@@ -49,6 +51,11 @@ public class DashboardUseCase : IDashboardUseCase
     //filtro das receitas
     private static IList<Domain.Entities.Recipe> Filter(RequestDashboardJson req, IList<Domain.Entities.Recipe> recipes)
     {
+        if(recipes is null)
+        {
+            return new List<Domain.Entities.Recipe>();
+        }
+
         var filteredRecipes = recipes;
 
         if (req.Category.HasValue)
@@ -60,12 +67,14 @@ public class DashboardUseCase : IDashboardUseCase
 
         if (!string.IsNullOrWhiteSpace(req.TypeOrIngredient))
         {
+            //WordCompareInsensitive criado em domain.extension
+
             filteredRecipes = recipes.Where(r => 
-                r.Title.Contains(req.TypeOrIngredient) ||
-                r.Ingredients.Any(i => i.Product.Contains(req.TypeOrIngredient))
+                r.Title.WordCompareInsensitive(req.TypeOrIngredient) ||
+                r.Ingredients.Any(i => i.Product.WordCompareInsensitive(req.TypeOrIngredient))
                 ).ToList();
         }
 
-        return filteredRecipes;
+        return filteredRecipes.OrderBy(r => r.Title).ToList();
     }
 }
