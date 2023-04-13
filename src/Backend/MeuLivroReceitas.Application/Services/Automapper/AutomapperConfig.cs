@@ -53,7 +53,9 @@ public class AutomapperConfig : Profile
             .ForMember(destiny => destiny.Id, config => config.MapFrom(origem => _hashId.EncodeLong(origem.Id)))
             //para fazer a contagem de ingredientes que esta na receita
             //informa que para IngredientsQuantity sera a contagem de todos ingredientes da receita
-            .ForMember(destyni => destyni.IngredientsQuantity, config => config.MapFrom(origem => origem.Ingredients.Count))
-    ;
+            .ForMember(destyni => destyni.IngredientsQuantity, config => config.MapFrom(origem => origem.Ingredients.Count));
+
+        //para habilitar a transformacao do usuario para ResponsePerfilUserJson
+        CreateMap<Domain.Entities.Usuario, ResponsePerfilUserJson>();
     }
 }

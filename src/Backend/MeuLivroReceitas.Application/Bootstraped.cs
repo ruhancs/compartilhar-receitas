@@ -8,6 +8,7 @@ using MeuLivroReceitas.Application.UseCases.Recipe;
 using MeuLivroReceitas.Application.UseCases.Recipe.Delete;
 using MeuLivroReceitas.Application.UseCases.Recipe.GetById;
 using MeuLivroReceitas.Application.UseCases.Recipe.Update;
+using MeuLivroReceitas.Application.UseCases.User.GetPerfil;
 using MeuLivroReceitas.Application.UseCases.User.Register;
 using MeuLivroReceitas.Application.UseCases.User.Update;
 using Microsoft.Extensions.Configuration;
@@ -56,7 +57,8 @@ public static class Bootstraped
             .AddScoped<IDashboardUseCase, DashboardUseCase>()
             .AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>()
             .AddScoped<IUpdateRecipeUseCase, UpdateRecipeUseCase>()
-            .AddScoped<IDeleteRecipeUseCase, DeleteRecipeUseCase>();
+            .AddScoped<IDeleteRecipeUseCase, DeleteRecipeUseCase>()
+            .AddScoped<IGetPerfilUseCase, GetPerfilUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)
