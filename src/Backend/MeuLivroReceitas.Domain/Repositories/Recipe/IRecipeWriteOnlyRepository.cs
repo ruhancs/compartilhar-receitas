@@ -7,4 +7,6 @@ namespace MeuLivroReceitas.Domain.Repositories.Recipe;
 public interface IRecipeWriteOnlyRepository
 {
     Task Register(Entities.Recipe recipe);
+
+    Task Delete(long id);
 }

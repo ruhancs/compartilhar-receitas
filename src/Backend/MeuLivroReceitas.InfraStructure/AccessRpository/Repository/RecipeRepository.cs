@@ -17,6 +17,14 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
         _context = context;
     }
 
+    public async Task Delete(long RecipeId)
+    {
+        var recipe = await _context.Receitas
+            .FirstOrDefaultAsync(r => r.Id == RecipeId);
+
+        _context.Receitas.Remove(recipe);
+    }
+
     public async Task<IList<Recipe>> GetAllRecipesUser(long userId)
     {
         //adicionar Receitas.AsNoTracking() para melhorar performance
