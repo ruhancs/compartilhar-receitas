@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MeuLivroReceitas.Api.Filters;
+namespace MeuLivroReceitas.Api.Filters.AuthenticatedUser;
 
 //verificar se o usuario esta logado
 //registrar em program que quer utilizar como filtro
-public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilter
+public class AuthenticatedUserAttr : AuthorizeAttribute, IAsyncAuthorizationFilter
 {
     private readonly TokenController _tokenController;
     private readonly IUserReadOnlyRepository _repository;
@@ -37,8 +37,8 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
 
             //verificar no db se o email existe
             var user = await _repository.GetEmail(email);
-        
-            if(user is null)
+
+            if (user is null)
             {
                 throw new ExceptionBase(string.Empty);
             }
@@ -79,7 +79,7 @@ public class AuthenticatedUserAttr : AuthorizeAttribute ,IAsyncAuthorizationFilt
     private static void TokenExpired(AuthorizationFilterContext context)
     {
         context.Result = new UnauthorizedObjectResult(new ResponseError(ResourceMessageError.EXPIRED_TOKEN));
-    }   
+    }
     private static void UserUnAuthorized(AuthorizationFilterContext context)
     {
         context.Result = new UnauthorizedObjectResult(new ResponseError(ResourceMessageError.UNAUTHORIZED_USER));

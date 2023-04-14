@@ -12,6 +12,7 @@ public class Context : DbContext
     //mapeamento da tabela User
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Recipe> Receitas { get; set; }
+    public DbSet<Codes> Codes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
