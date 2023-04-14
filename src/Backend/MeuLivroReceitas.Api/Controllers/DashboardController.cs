@@ -1,4 +1,4 @@
-using MeuLivroReceitas.Api.Filters;
+using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
 using MeuLivroReceitas.Application.UseCases.Dashboard;
 using MeuLivroReceitas.Application.UseCases.User.Register;
 using MeuLivroReceitas.Application.UseCases.User.Update;

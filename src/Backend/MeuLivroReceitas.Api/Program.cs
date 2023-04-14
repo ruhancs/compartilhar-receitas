@@ -11,6 +11,10 @@ using Microsoft.OpenApi.Models;
 using MeuLivroReceitas.Api.Middleware;
 using HashidsNet;
 using MeuLivroReceitas.Api.Filters.Swagger;
+using MeuLivroReceitas.Api.WebSockets;
+using Microsoft.AspNetCore.Builder;
+using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,8 +87,22 @@ builder.Services.AddScoped(provider => new AutoMapper.MapperConfiguration(
         cfg.AddProfile(new AutomapperConfig(provider.GetService<IHashids>()));
     }).CreateMapper());
 
+//para utilizar a Policy de authenticacao de usuario em Api.WebSockets addConnection
+builder.Services.AddScoped<IAuthorizationHandler, LoggedUserHandler>();
+
+//configurar para quando utilizar a Policy LoggedUser em Api.WebSockets
+//utilizar Filters.AuthenticatedUser LoggedUserHandler
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("LoggedUser", policy => policy.Requirements.Add(new LoggedUserRequirements()));
+});
+
 //filtro de authenticacao de usuario
 builder.Services.AddScoped<AuthenticatedUserAttr>();
+
+//para utilizar o Websocket config do SignalR
+//com o app construido mappear o hub
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -105,6 +123,10 @@ updateDataBase();
 
 //para adicionar a opcao de escolher a linguagem
 app.UseMiddleware<CultureMiddleware>();
+
+//mappear o Hub criado em Api.WebSockets AddConnection
+// /addConexao e a rota(url) para conectar no hub
+app.MapHub<AddConnection>("/addConexao");
 
 app.Run();
 

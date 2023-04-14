@@ -1,5 +1,5 @@
 ﻿using MeuLivroReceitas.Api.Binder;
-using MeuLivroReceitas.Api.Filters;
+using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
 using MeuLivroReceitas.Application.UseCases.Recipe;
 using MeuLivroReceitas.Application.UseCases.Recipe.Delete;
 using MeuLivroReceitas.Application.UseCases.Recipe.GetById;

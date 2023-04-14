@@ -2,6 +2,7 @@
 using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
+using MeuLivroReceitas.Application.UseCases.Connection.QRCodeGenerator;
 using MeuLivroReceitas.Application.UseCases.Dashboard;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
 using MeuLivroReceitas.Application.UseCases.Recipe;
@@ -58,7 +59,8 @@ public static class Bootstraped
             .AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>()
             .AddScoped<IUpdateRecipeUseCase, UpdateRecipeUseCase>()
             .AddScoped<IDeleteRecipeUseCase, DeleteRecipeUseCase>()
-            .AddScoped<IGetPerfilUseCase, GetPerfilUseCase>();
+            .AddScoped<IGetPerfilUseCase, GetPerfilUseCase>()
+            .AddScoped<IQRCodeGeneratorUseCase, QRCodeGeneratorUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)
