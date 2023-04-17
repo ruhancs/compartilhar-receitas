@@ -162,4 +162,7 @@
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro interno tente novamente mais tarde</value>
   </data>
+  <data name="USER_NOT_CONNECTED" xml:space="preserve">
+    <value>Esse usuario nao esta conectado com voce</value>
+  </data>
 </root>

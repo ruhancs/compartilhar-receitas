@@ -57,5 +57,9 @@ public class AutomapperConfig : Profile
 
         //para habilitar a transformacao do usuario para ResponsePerfilUserJson
         CreateMap<Domain.Entities.Usuario, ResponsePerfilUserJson>();
+        
+        CreateMap<Usuario, ResponseUserConnectedJson>()
+            //transformar o id da resposta de long para hash
+            .ForMember(destiny => destiny.Id, config => config.MapFrom(origem => _hashId.EncodeLong(origem.Id)));
     }
 }

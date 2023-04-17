@@ -10,6 +10,7 @@ using MeuLivroReceitas.Domain.Repositories.User;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 using MeuLivroReceitas.InfraStructure.AccessRpository.Repository;
 using MeuLivroReceitas.Domain.Repositories.Code;
+using MeuLivroReceitas.Domain.Repositories.Connection;
 
 namespace MeuLivroReceitas.InfraStructure;
 
@@ -71,7 +72,10 @@ public static class Bootstrappers
             .AddScoped<IRecipeWriteOnlyRepository, RecipeRepository>()
             .AddScoped<IRecipeReadOnlyRepository, RecipeRepository>()
             .AddScoped<IRecipeUpdateOnlyRepository, RecipeRepository>()
-            .AddScoped<ICodeWriteOnlyRepository, CodeRepository>();
+            .AddScoped<ICodeWriteOnlyRepository, CodeRepository>()
+            .AddScoped<ICodeReadOnlyRepository, CodeRepository>()
+            .AddScoped<IConnectionReadOnlyRepository, ConnectionRepository>()
+            .AddScoped<IConnectionWriteOnlyRepository, ConnectionRepository>();
     }
 
     private static void AddFluentMigrator(IServiceCollection service, IConfiguration configManager)

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 using MeuLivroReceitas.Exceptions.ExceptionsBase;
@@ -7,6 +6,7 @@ using MeuLivroReceitas.Exceptions;
 using MeuLivroReceitas.Domain.Entities;
 using MeuLivroReceitas.Domain.Repositories;
 using MeuLivroReceitas.Application.UseCases.Recipe.Register;
+using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 
 namespace MeuLivroReceitas.Application.UseCases.Recipe.Update;
 

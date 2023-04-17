@@ -17,6 +17,23 @@ public class CodeRepository : ICodeReadOnlyRepository, ICodeWriteOnlyRepository
         _context = context;
     }
 
+    public async Task Delete(long userId)
+    {
+        var codes = await _context.Codes.Where(c => c.UserId == userId).ToListAsync();
+
+        //remover todos codigos do usuario
+        if (codes.Any())
+        {
+            _context.Codes.RemoveRange(codes);
+        }
+    }
+
+    public async Task<Codes> GetEntityCode(string code)
+    {
+        return await _context.Codes.AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Code == code);
+    }
+
     public async Task Register(Codes code)
     {
         //evitar que salve muitos codigos para o usuario

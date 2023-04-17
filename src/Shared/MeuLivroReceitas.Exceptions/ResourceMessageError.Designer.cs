@@ -194,5 +194,14 @@ namespace MeuLivroReceitas.Exceptions {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user is not connected with you.
+        /// </summary>
+        public static string USER_NOT_CONNECTED {
+            get {
+                return ResourceManager.GetString("USER_NOT_CONNECTED", resourceCulture);
+            }
+        }
     }
 }

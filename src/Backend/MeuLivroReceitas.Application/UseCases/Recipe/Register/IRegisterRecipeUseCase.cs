@@ -1,7 +1,7 @@
 ﻿using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;
 
-namespace MeuLivroReceitas.Application.UseCases.Recipe;
+namespace MeuLivroReceitas.Application.UseCases.Recipe.Register;
 
 public interface IRegisterRecipeUseCase
 {

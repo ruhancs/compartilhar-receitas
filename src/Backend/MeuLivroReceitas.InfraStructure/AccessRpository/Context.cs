@@ -10,9 +10,11 @@ public class Context : DbContext
 
     //para se conectar com a entidade Usuario
     //mapeamento da tabela User
+    //nomes devem estar de acordo com a tabela criada em versions
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Recipe> Receitas { get; set; }
     public DbSet<Codes> Codes { get; set; }
+    public DbSet<Conexao> Connection { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
