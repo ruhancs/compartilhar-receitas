@@ -162,4 +162,7 @@
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Internal server error try again later</value>
   </data>
+  <data name="USER_NOT_CONNECTED" xml:space="preserve">
+    <value>This user is not connected with you</value>
+  </data>
 </root>

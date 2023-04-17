@@ -1,4 +1,4 @@
-﻿using MeuLivroReceitas.Application.Services.AuthUser;
+﻿using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using MeuLivroReceitas.Domain.Repositories;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 using MeuLivroReceitas.Exceptions;

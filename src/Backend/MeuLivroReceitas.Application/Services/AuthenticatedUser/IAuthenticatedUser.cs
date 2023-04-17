@@ -1,6 +1,6 @@
 ﻿using MeuLivroReceitas.Domain.Entities;
 
-namespace MeuLivroReceitas.Application.Services.AuthUser;
+namespace MeuLivroReceitas.Application.Services.AuthenticatedUser;
 
 public interface IAuthenticatedUser
 {

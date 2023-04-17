@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using MeuLivroReceitas.Application.Services.AuthUser;
+using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using MeuLivroReceitas.Comunication.Response;
+using MeuLivroReceitas.Domain.Repositories.Connection;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 using MeuLivroReceitas.Exceptions;
 using MeuLivroReceitas.Exceptions.ExceptionsBase;
@@ -20,15 +21,19 @@ public class GetRecipeByIdUseCase : IGetRecipeByIdUseCase
     //automapperConfig em EntityResponse
     private readonly IMapper _mapper;
 
+    private readonly IConnectionReadOnlyRepository _connectionRepository;
+
     public GetRecipeByIdUseCase(
         IRecipeReadOnlyRepository repository,
         IAuthenticatedUser user,
-        IMapper mapper
+        IMapper mapper,
+        IConnectionReadOnlyRepository connectionRepository
         )
     {
         _repository = repository;
         _user = user;
         _mapper = mapper;
+        _connectionRepository = connectionRepository;
     }
 
     public async Task<ResponseRecipeJson> Execute(long recipeId)
@@ -39,17 +44,19 @@ public class GetRecipeByIdUseCase : IGetRecipeByIdUseCase
 
         var recipe = await _repository.GetRecipesById( recipeId );
 
-        Validate(user,recipe);
+        await Validate(user,recipe);
 
         //transforma recipe em ResponseRecipeJson
         return _mapper.Map<ResponseRecipeJson>(recipe);
     }
 
-    public void Validate(
+    public async Task Validate(
         Domain.Entities.Usuario user,
         Domain.Entities.Recipe recipe)
     {
-        if ( recipe is null || recipe.UserId != user.Id )
+        var allConnetions = await _connectionRepository.GetUserConnetions(user.Id);
+
+        if ( recipe is null || recipe.UserId != user.Id && !allConnetions.Any(c => c.Id == recipe.UserId))
         {
             throw new ValidationErrors(new List<string> { ResourceMessageError.RECIPE_NOT_FOUND });
         }

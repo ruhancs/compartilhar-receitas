@@ -29,9 +29,19 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
     {
         //adicionar Receitas.AsNoTracking() para melhorar performance
         return await _context.Receitas
-            .Include(r => r.Ingredients)//incluir a tabela de ingredientes na consulta
             .AsNoTracking()
+            .Include(r => r.Ingredients)//incluir a tabela de ingredientes na consulta
             .Where(r => r.UserId == userId).ToListAsync();
+    }
+    
+    public async Task<IList<Recipe>> GetAllRecipesConnectedUsers(List<long> userIds)
+    {
+        //retornar as receitas dos usuario que estao conectados
+        //todos users que contem o userId
+        return await _context.Receitas
+            .AsNoTracking()
+            .Include(r => r.Ingredients)//incluir a tabela de ingredientes na consulta
+            .Where(r => userIds.Contains(r.UserId)).ToListAsync();
     }
 
     public async Task<Recipe> GetRecipesById(long recipeId)
@@ -49,6 +59,11 @@ public class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeReadOnlyRepos
             .Include(r => r.Ingredients)
             .FirstOrDefaultAsync(r => r.Id == recipeId);
             
+    }
+
+    public async Task<int> QuantityRecipes(long userId)
+    {
+        return await _context.Receitas.CountAsync(r => r.UserId == userId);
     }
 
     public async Task Register(Recipe recipe)

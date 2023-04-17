@@ -1,20 +1,19 @@
-﻿using MeuLivroReceitas.InfraStructure.Migrations;
+﻿using HashidsNet;
+using MeuLivroReceitas.Api.Filters;
+using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
+using MeuLivroReceitas.Api.Filters.Swagger;
+using MeuLivroReceitas.Api.Middleware;
+using MeuLivroReceitas.Api.WebSockets;
+using MeuLivroReceitas.Application;
+using MeuLivroReceitas.Application.Services.Automapper;
 using MeuLivroReceitas.Domain.Extension;
 using MeuLivroReceitas.InfraStructure;
-using MeuLivroReceitas.Api.Filters;
-using MeuLivroReceitas.Application.Services.Automapper;
-using MeuLivroReceitas.Application;
 using MeuLivroReceitas.InfraStructure.AccessRpository;
-using MeuLivroReceitas.Application.Services.AuthUser;
-using MeuLivroReceitas.Application.Services.AuthenticatedUser;
-using Microsoft.OpenApi.Models;
-using MeuLivroReceitas.Api.Middleware;
-using HashidsNet;
-using MeuLivroReceitas.Api.Filters.Swagger;
-using MeuLivroReceitas.Api.WebSockets;
-using Microsoft.AspNetCore.Builder;
-using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
+using MeuLivroReceitas.InfraStructure.Migrations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +58,7 @@ builder.Services.AddSwaggerGen(c =>
                  Id = "Bearer"
              }
           },
-          new string[] {}
+          Array.Empty<string>()
        }
     });
 
@@ -104,7 +103,22 @@ builder.Services.AddScoped<AuthenticatedUserAttr>();
 //com o app construido mappear o hub
 builder.Services.AddSignalR();
 
+//monitoracao da api health check
+//endpoint para monitorar o estado da api
+builder.Services.AddHealthChecks().AddDbContextCheck<Context>();
+
 var app = builder.Build();
+
+//rota para acessar health check
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,//sem cache do estado
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

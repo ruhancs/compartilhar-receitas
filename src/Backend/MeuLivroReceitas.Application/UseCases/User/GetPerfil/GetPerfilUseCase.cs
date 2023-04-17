@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MeuLivroReceitas.Application.Services.AuthUser;
+using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using MeuLivroReceitas.Comunication.Response;
 
 namespace MeuLivroReceitas.Application.UseCases.User.GetPerfil;

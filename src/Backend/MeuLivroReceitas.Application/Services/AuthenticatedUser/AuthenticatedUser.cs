@@ -1,5 +1,4 @@
-﻿using MeuLivroReceitas.Application.Services.AuthUser;
-using MeuLivroReceitas.Application.Services.Token;
+﻿using MeuLivroReceitas.Application.Services.Token;
 using MeuLivroReceitas.Domain.Entities;
 using MeuLivroReceitas.Domain.Repositories.User;
 using Microsoft.AspNetCore.Http;

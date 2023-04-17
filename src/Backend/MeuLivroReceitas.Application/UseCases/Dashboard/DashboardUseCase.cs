@@ -1,9 +1,11 @@
 ﻿using System.Globalization;
 using AutoMapper;
-using MeuLivroReceitas.Application.Services.AuthUser;
+using MeuLivroReceitas.Application.Services.AuthenticatedUser;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;
+using MeuLivroReceitas.Domain.Entities;
 using MeuLivroReceitas.Domain.Extension;
+using MeuLivroReceitas.Domain.Repositories.Connection;
 using MeuLivroReceitas.Domain.Repositories.Recipe;
 
 namespace MeuLivroReceitas.Application.UseCases.Dashboard;
@@ -21,15 +23,19 @@ public class DashboardUseCase : IDashboardUseCase
     //automapperConfig em EntityResponse
     private readonly IMapper _mapper;
 
+    private readonly IConnectionReadOnlyRepository _connectionRepository;
+
     public DashboardUseCase(
         IRecipeReadOnlyRepository repository,
         IAuthenticatedUser user,
-        IMapper mapper
+        IMapper mapper,
+        IConnectionReadOnlyRepository connectionRepository
         )
     {
         _repository = repository;
         _user = user;
         _mapper = mapper;
+        _connectionRepository = connectionRepository;
     }
     public async Task<ResponseDashboardJson> Execute(RequestDashboardJson req)
     {
@@ -40,12 +46,34 @@ public class DashboardUseCase : IDashboardUseCase
         var recipes = await _repository.GetAllRecipesUser(user.Id);
 
         recipes = Filter(req, recipes );
-        
+
+        var recipesUsersConnected = await RecipesConnectedUsers(req, user);
+
+        //concatenar as receitas do usuario com as do usuarios conectados
+        recipes = recipes.Concat(recipesUsersConnected).ToList();
+
         return new ResponseDashboardJson
         {
             //transforma recipes em List<ResponseRecipeDashboardJson>
             Recipes = _mapper.Map<List<ResponseRecipeDashboardJson>>(recipes)
         };
+    }
+
+    private async Task<IList<Domain.Entities.Recipe>> RecipesConnectedUsers(
+        RequestDashboardJson req,
+        Usuario user
+        )
+    {
+        var allConnetions = await _connectionRepository.GetUserConnetions(user.Id);
+
+        //pegar o id dos usuarios conectados
+        var usersConnectedIds = allConnetions.Select(c => c.Id).ToList();
+
+        var recipesUsersConnected = await _repository.GetAllRecipesConnectedUsers(usersConnectedIds);
+
+        return Filter(req, recipesUsersConnected);
+
+
     }
 
     //filtro das receitas

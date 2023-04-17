@@ -1,13 +1,17 @@
 ﻿using MeuLivroReceitas.Application.Services.AuthenticatedUser;
-using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Application.Services.Token;
-using MeuLivroReceitas.Application.UseCases.Connection.QRCodeGenerator;
+using MeuLivroReceitas.Application.UseCases.Connection.acceptConnection;
+using MeuLivroReceitas.Application.UseCases.Connection.GenerateQRCode;
+using MeuLivroReceitas.Application.UseCases.Connection.Get;
+using MeuLivroReceitas.Application.UseCases.Connection.ReadQRCode;
+using MeuLivroReceitas.Application.UseCases.Connection.RefuseConnection;
+using MeuLivroReceitas.Application.UseCases.Connection.Remove;
 using MeuLivroReceitas.Application.UseCases.Dashboard;
 using MeuLivroReceitas.Application.UseCases.Login.DoLogin;
-using MeuLivroReceitas.Application.UseCases.Recipe;
 using MeuLivroReceitas.Application.UseCases.Recipe.Delete;
 using MeuLivroReceitas.Application.UseCases.Recipe.GetById;
+using MeuLivroReceitas.Application.UseCases.Recipe.Register;
 using MeuLivroReceitas.Application.UseCases.Recipe.Update;
 using MeuLivroReceitas.Application.UseCases.User.GetPerfil;
 using MeuLivroReceitas.Application.UseCases.User.Register;
@@ -60,7 +64,12 @@ public static class Bootstraped
             .AddScoped<IUpdateRecipeUseCase, UpdateRecipeUseCase>()
             .AddScoped<IDeleteRecipeUseCase, DeleteRecipeUseCase>()
             .AddScoped<IGetPerfilUseCase, GetPerfilUseCase>()
-            .AddScoped<IQRCodeGeneratorUseCase, QRCodeGeneratorUseCase>();
+            .AddScoped<IQRCodeGeneratorUseCase, QRCodeGeneratorUseCase>()
+            .AddScoped<IQRCodeReadUseCase, QRCodeReadUseCase>()
+            .AddScoped<IRefuseConnectionUseCase, RefuseConnectionUseCase>()
+            .AddScoped<IAcceptConnectionUseCase, AcceptConnectionUseCase>()
+            .AddScoped<IGetAllConnectionsUseCase, GetAllConnectionsUseCase>()
+            .AddScoped<IRemoveConnectionUseCase, RemoveConnectionUseCase>();
     }
 
     private static void addUserAuthenticated(IServiceCollection service)

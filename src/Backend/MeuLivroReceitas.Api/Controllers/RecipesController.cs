@@ -1,8 +1,8 @@
 ﻿using MeuLivroReceitas.Api.Binder;
 using MeuLivroReceitas.Api.Filters.AuthenticatedUser;
-using MeuLivroReceitas.Application.UseCases.Recipe;
 using MeuLivroReceitas.Application.UseCases.Recipe.Delete;
 using MeuLivroReceitas.Application.UseCases.Recipe.GetById;
+using MeuLivroReceitas.Application.UseCases.Recipe.Register;
 using MeuLivroReceitas.Application.UseCases.Recipe.Update;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Comunication.Response;

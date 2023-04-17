@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using MeuLivroReceitas.Application.Services.AuthenticatedUser;
-using MeuLivroReceitas.Application.Services.AuthUser;
 using MeuLivroReceitas.Application.Services.Cryptography;
 using MeuLivroReceitas.Comunication.Request;
 using MeuLivroReceitas.Domain.Entities;
